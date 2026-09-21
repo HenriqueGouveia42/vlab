@@ -1,0 +1,36 @@
+Passo 0: Criar a migration
+    executar o comando "php artisan make:migration create_nome_da_tabela_table"
+
+Passo 1: Criar a rota
+    editar o aquivo "routes/api.php"
+
+Passo 2: Criar o Form Request
+    executar o comando "php artisan make:request NomeDoRequest"
+
+Passo 3: Criar a lógica de domínio
+    executar o comando "php artisan make:model NomeDoModel"
+
+Passo 4: Criar o Controller
+    executar o comando "php artisan make:controller NomeController"
+
+-----------------------------------------
+
+Para agilizar, podemos simplesmente executar algo como
+    "php artisan make:model Paciente -mc --api --requests"
+
+    Esse comando vai criar 
+        1 Migration (tabela no banco de dados)
+        1 Model (entidade de domínio com regras de negócio)
+        1 Form Request
+        1 Controller (orquestrador da requisicao)
+
+        É bom ir desenvolvendo nessa exata mesma ordem
+
+        Partindo do 'request' até o 'response', o fluxo de dados é o seguinte:
+
+        rota da 'request':
+            client -> rota da api -> Form Request -> Controller -> Model
+        
+        rota da 'response':
+            Model -> Controller -> client
+
