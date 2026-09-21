@@ -1,0 +1,55 @@
+services:
+  db:             
+    image: mirror.gcr.io/library/postgres:16
+    container_name: vlab_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: vlab_solicitacoes
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: rootpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - vlab_pgdata:/var/lib/postgresql/data
+    networks:
+      - vlab_network
+
+  api:
+    build:
+      context: ./server    
+      dockerfile: Dockerfile
+    container_name: vlab_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - vlab_network
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  client:
+    build:
+      context: ./client     
+      dockerfile: Dockerfile
+    container_name: vlab_client
+    restart: unless-stopped
+    ports:
+      - "5173:5173"         
+    volumes:
+      - ./client:/app      
+      - /app/node_modules   
+    depends_on:
+      - api                 
+    networks:
+      - vlab_network
+
+networks:
+  vlab_network:
+    driver: bridge
+
+volumes:
+  vlab_pgdata:
+    driver: local
