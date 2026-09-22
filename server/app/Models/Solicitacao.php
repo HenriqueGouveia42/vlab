@@ -48,5 +48,18 @@ class Solicitacao extends Model
 
     }
 
+    public function updateStatus(string $newStatus): void{
+
+        $is_valid_transition = $this->isValidStatusTransition($newStatus);
+
+        if(!$is_valid_transition){
+            throw new \Exception("Mudança de status inválida. Não é possível mudar de {$this->status} para {$newStatus}.");
+        }
+
+        $this->status = $newStatus;
+
+        $this->save();
+    }
+
 
 }
