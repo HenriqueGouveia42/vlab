@@ -15,7 +15,6 @@ class Solicitacao extends Model
         'nome_solicitante',
         'categoria',
         'prioridade',
-        'status',
         'descricao',
         'justificativa_prioridade'
     ];
@@ -30,6 +29,10 @@ class Solicitacao extends Model
             $protocolo_gerado = 'sol-' . date('Ymd') . '-' . strtoupper(Str::random(5));
 
             $solicitacao->protocolo = $protocolo_gerado;
+
+            if ($solicitacao->prioridade === 'URGENTE' && empty($solicitacao->justificativa_prioridade)) {
+                throw new \Exception("Justificativa é obrigatória para prioridade URGENTE.");
+            }
 
         });
     }
@@ -53,7 +56,7 @@ class Solicitacao extends Model
         $is_valid_transition = $this->isValidStatusTransition($newStatus);
 
         if(!$is_valid_transition){
-            throw new \Exception("Mudança de status inválida. Não é possível mudar de {$this->status} para {$newStatus}.");
+            throw new \Exception("Mudanca de status invalida. Mmudanca de {$this->status} para {$newStatus} nao permitida.");
         }
 
         $this->status = $newStatus;
