@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\Enums\CategoriaEnum;
+use App\Enums\Enums\PrioridadeEnum;
+use App\Enums\StatusSolicitacaoEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -18,9 +21,15 @@ class Solicitacao extends Model
         'descricao',
         'justificativa_prioridade'
     ];
+    
+    protected $casts = [
+        'status' => StatusSolicitacaoEnum::class,
+        'categoria' => CategoriaEnum::class,
+        'prioridade' => PrioridadeEnum::class,
+    ];
 
     protected $attributes = [
-        'status' => 'RECEBIDA'
+        'status' => StatusSolicitacaoEnum::RECEBIDA->value
     ]; // Toda solicitação deve ser criada com status inicial RECEBIDA.
 
     protected static function booted(): void{
@@ -30,7 +39,7 @@ class Solicitacao extends Model
 
             $solicitacao->protocolo = $protocolo_gerado;
 
-            if ($solicitacao->prioridade === 'URGENTE' && empty($solicitacao->justificativa_prioridade)) {
+            if ($solicitacao->prioridade === PrioridadeEnum::URGENTE->value && empty($solicitacao->justificativa_prioridade)) {
                 throw new \Exception("Justificativa é obrigatória para prioridade URGENTE.");
             }
 
@@ -40,11 +49,11 @@ class Solicitacao extends Model
     public function isValidStatusTransition(string $newStatus): bool{
 
         $allowedChanges = [
-            'RECEBIDA'   => ['EM_ANALISE', 'CANCELADA'],
-            'EM_ANALISE' => ['AGENDADA', 'CANCELADA'],
-            'AGENDADA'   => ['CONCLUIDA', 'CANCELADA'],
-            'CONCLUIDA'  => [], 
-            'CANCELADA'  => [],
+            StatusSolicitacaoEnum::RECEBIDA->value   => [ StatusSolicitacaoEnum::EM_ANALISE->value, StatusSolicitacaoEnum::CANCELADA->value],
+            StatusSolicitacaoEnum::EM_ANALISE->value => [StatusSolicitacaoEnum::AGENDADA->value, StatusSolicitacaoEnum::CANCELADA->value],
+            StatusSolicitacaoEnum::AGENDADA->value   => [StatusSolicitacaoEnum::CONCLUIDA->value, StatusSolicitacaoEnum::CANCELADA->value],
+            StatusSolicitacaoEnum::CONCLUIDA->value  => [], 
+            StatusSolicitacaoEnum::CANCELADA  => [],
         ];
 
         return in_array($newStatus, $allowedChanges[$this->status] ?? []);
