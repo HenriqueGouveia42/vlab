@@ -12,6 +12,6 @@ Route::post('/v1/solicitacoes', [SolicitacaoController::class, 'store']);
 
 Route::get('/v1/solicitacoes', [SolicitacaoController::class, 'index']);
 
-Route::get('v1/solicitacoes/{id}', [SolicitacaoController::class, 'show']);
+Route::get('/v1/solicitacoes/{id}', [SolicitacaoController::class, 'show']);
 
-Route::patch('v1/solicitacoes/{id}/status', [SolicitacaoController::class, 'updateStatus']);
+Route::patch('/v1/solicitacoes/{id}/status', [SolicitacaoController::class, 'updateStatus']);
