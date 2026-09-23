@@ -40,7 +40,7 @@ class IndexSolicitacaoRequest extends FormRequest
             'status.in' => 'O status informado para o filtro é inválido.',
             'categoria.in' => 'A categoria informada para o filtro é inválida.',
             'prioridade.in' => 'A prioridade informada para o filtro é inválida.',
-            'page.integer' => 'A página deve ser um número numérico válido.'
+            'page.integer' => 'A página deve ser um número válido.'
         ];
     }
 }
