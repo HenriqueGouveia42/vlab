@@ -1,3 +1,31 @@
+Tecnologias utilizadas:
+    PHP:
+    Laravel:
+    Typescript:
+    React:
+    PostgreSQL:
+    Docker
+
+Instrucoes para executar o projeto:
+    -navegue até o diretório raiz (/vlab)
+    -execute o comando "docker-compose up --build"
+
+Inteligência Artificial foi utilizada de forma pedagógica, para que o desenvolvedor candidato apreendesse como funciona o framework / 
+ecossistema Laravel, como a utilização do artisian para criar Migrations, Models, FormRequests e Controllers, e entender o paradigma
+Active Record (com o ORM Eloquent)
+
+
+
+
+
+
+
+
+
+
+
+
+
 Passo 0: Criar a migration
     executar o comando "php artisan make:migration create_nome_da_tabela_table"
 
@@ -34,3 +62,5 @@ Para agilizar, podemos simplesmente executar algo como
         rota da 'response':
             Model -> Controller -> client
 
+Para criar uma teste executamos algo como
+    "php artisan make:test UpdateSolicitacaoStatusTeste"
