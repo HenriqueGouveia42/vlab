@@ -18,7 +18,11 @@ class SolicitacaoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nome_solicitante' => fake()->name(),
+            'categoria' => 'CONSULTA',
+            'prioridade' => 'MEDIA',
+            'status' => 'RECEBIDA',
+            'descricao' => fake()->sentence(),
         ];
     }
 }
