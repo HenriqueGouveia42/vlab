@@ -2,8 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\CategoriaEnum;
+use App\Enums\PrioridadeEnum;
+use App\Enums\StatusSolicitacaoEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class IndexSolicitacaoRequest extends FormRequest
 {
@@ -27,9 +31,9 @@ class IndexSolicitacaoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['nullable', 'in:RECEBIDA,EM_ANALISE,AGENDADA,CONCLUIDA,CANCELADA'],
-            'categoria' => ['nullable', 'in:CONSULTA,EXAME,VACINACAO,OUTRO'],
-            'prioridade' => ['nullable', 'in:BAIXA,MEDIA,ALTA,URGENTE'],
+            'status' => ['nullable', Rule::enum(StatusSolicitacaoEnum::class)],
+            'categoria' => ['nullable', Rule::enum(CategoriaEnum::class)],
+            'prioridade' => ['nullable', Rule::enum(PrioridadeEnum::class)],
             'page' => ['nullable', 'integer', 'min:1']
         ];
     }

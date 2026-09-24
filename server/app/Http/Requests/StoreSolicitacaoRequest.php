@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\CategoriaEnum;
+use App\Enums\PrioridadeEnum;
+use Illuminate\Validation\Rule;
 
 class StoreSolicitacaoRequest extends FormRequest
 {
@@ -24,18 +27,18 @@ class StoreSolicitacaoRequest extends FormRequest
     {
         return [
             'nome_solicitante' => ['required', 'string', 'max:255'],
-            'categoria' => ['required', 'in:CONSULTA,EXAME,VACINACAO,OUTRO'],
-            'prioridade' => ['required', 'in:BAIXA,MEDIA,ALTA,URGENTE'],
+            'categoria' => ['required', Rule::enum(CategoriaEnum::class)],
+            'prioridade' => ['required', Rule::enum(PrioridadeEnum::class)],
             'descricao' => ['required', 'string'],
-            'justificativa_prioridade' => ['required_if:prioridade,URGENTE'] // Solicitações com prioridade URGENTE devem possuir justificativa de prioridade preenchida.
+            'justificativa_prioridade' => ['nullable','required_if:prioridade,URGENTE', 'string', 'max:5000']// Solicitações com prioridade URGENTE devem possuir justificativa de prioridade preenchida.
         ];
     }
 
     public function messages(): array{
         return [
             'justificativa_prioridade.required_if' => 'Solicitacoes URGENTES devem possuir justificativa',
-            'categoria.in' => 'Categoria invalida',
-            'prioridade.in' => 'Prioridade invalida'
+            'categoria.enum' => 'Categoria invalida',
+            'prioridade.enum' => 'Prioridade invalida'
         ];
     }
 }

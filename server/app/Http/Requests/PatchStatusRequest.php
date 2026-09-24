@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\StatusSolicitacaoEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PatchStatusRequest extends FormRequest
 {
@@ -23,7 +25,7 @@ class PatchStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', 'in:RECEBIDA,EM_ANALISE,AGENDADA,CONCLUIDA,CANCELADA']
+            'status' => ['required', Rule::enum(StatusSolicitacaoEnum::class)]
         ];
     }
 }
