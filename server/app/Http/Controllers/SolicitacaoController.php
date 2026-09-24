@@ -6,6 +6,7 @@ use App\Http\Requests\IndexSolicitacaoRequest;
 use App\Http\Requests\PatchStatusRequest;
 use App\Models\Solicitacao; // Importanos aqui o modelo
 use App\Http\Requests\StoreSolicitacaoRequest; // Form request que valida a entrada antes de passar para o controller
+use App\Http\Resources\SolicitacaoResource; //Contrato de saída da API
 
 class SolicitacaoController extends Controller
 {
@@ -20,7 +21,7 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::create($dadosValidados);
 
-        return response()->json($solicitacao, 201);
+        return new SolicitacaoResource($solicitacao);
 
     }
 
@@ -45,7 +46,8 @@ class SolicitacaoController extends Controller
 
         $solicitacoes = $query->paginate(10);
 
-        return response()->json($solicitacoes);
+        //return response()->json($solicitacoes);
+        return SolicitacaoResource::collection($solicitacoes);
 
     }
 
@@ -53,7 +55,7 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::findOrFail($id);
 
-        return response()->json($solicitacao);
+        return new SolicitacaoResource($solicitacao);
 
     }
 
@@ -65,7 +67,8 @@ class SolicitacaoController extends Controller
 
             $solicitacao->updateStatus($request->status);
 
-            return response()->json($solicitacao);
+            //return response()->json($solicitacao);
+            return new SolicitacaoResource($solicitacao);
 
         }catch(\Exception $e){
             return response()->json(['erro' => $e->getMessage()], 422);
