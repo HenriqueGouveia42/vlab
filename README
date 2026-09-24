@@ -14,13 +14,17 @@ Inteligência Artificial foi utilizada de forma pedagógica, para que o desenvol
 ecossistema Laravel, como a utilização do artisian para criar Migrations, Models, FormRequests e Controllers, e entender o paradigma
 Active Record (com o ORM Eloquent)
 
+Como se trata de um CRUD simples, optei por utilizar uma arquitetura monolítica com separação de responsabilidades e padrão de projeto MVC (Model-View-Controller)
+
+    O Controller aqui atua como a interface que expôe um contrato simples e bem definido para ser utilizado por quem vai consumi-lo
+
+    O consumidor, nesse projeto, tratase da camada View, que nesse caso é o client feito em React, que também tem conhecimento do contrato exposto pelo controller
+
+    Ao fim da requisição, as regras de negócio são implementadas pelo Model, a classe que de fato conhece as regras de negócio da aplicação (Nesse caso, as restrições condicionais de campos a serem preenchidos, etc)
 
 
-
-
-
-
-
+    Ou seja, o fluxo de informação se dá da seguinte forma:
+        View -> Controller -> Model
 
 
 
