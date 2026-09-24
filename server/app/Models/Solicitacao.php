@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\Enums\CategoriaEnum;
-use App\Enums\Enums\PrioridadeEnum;
+use App\Enums\CategoriaEnum;
+use App\Enums\PrioridadeEnum;
 use App\Enums\StatusSolicitacaoEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,7 +39,7 @@ class Solicitacao extends Model
 
             $solicitacao->protocolo = $protocolo_gerado;
 
-            if ($solicitacao->prioridade === PrioridadeEnum::URGENTE->value && empty($solicitacao->justificativa_prioridade)) {
+            if ($solicitacao->prioridade->value === PrioridadeEnum::URGENTE->value && empty($solicitacao->justificativa_prioridade)) {
                 throw new \Exception("Justificativa é obrigatória para prioridade URGENTE.");
             }
 
@@ -53,10 +53,10 @@ class Solicitacao extends Model
             StatusSolicitacaoEnum::EM_ANALISE->value => [StatusSolicitacaoEnum::AGENDADA->value, StatusSolicitacaoEnum::CANCELADA->value],
             StatusSolicitacaoEnum::AGENDADA->value   => [StatusSolicitacaoEnum::CONCLUIDA->value, StatusSolicitacaoEnum::CANCELADA->value],
             StatusSolicitacaoEnum::CONCLUIDA->value  => [], 
-            StatusSolicitacaoEnum::CANCELADA  => [],
+            StatusSolicitacaoEnum::CANCELADA->value  => [],
         ];
 
-        return in_array($newStatus, $allowedChanges[$this->status] ?? []);
+        return in_array($newStatus, $allowedChanges[$this->status->value] ?? []);
 
     }
 
@@ -65,7 +65,7 @@ class Solicitacao extends Model
         $is_valid_transition = $this->isValidStatusTransition($newStatus);
 
         if(!$is_valid_transition){
-            throw new \Exception("Mudanca de status invalida. Mmudanca de {$this->status} para {$newStatus} nao permitida.");
+            throw new \Exception("Mudanca de status invalida. Mmudanca de {$this->status->value} para {$newStatus} nao permitida.");
         }
 
         $this->status = $newStatus;
