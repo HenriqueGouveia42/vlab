@@ -41,4 +41,32 @@ class StoreSolicitacaoRequest extends FormRequest
             'prioridade.enum' => 'Prioridade invalida'
         ];
     }
+
+    
+    // Serve apenas para o scribe gerar documentacao  
+    public function bodyParameters(): array
+    {
+        return [
+            'nome_solicitante' => [
+                'description' => 'Nome completo do solicitante.',
+                'example' => 'João da Silva',
+            ],
+            'categoria' => [
+                'description' => 'Categoria da solicitação. Aceita valores definidos no CategoriaEnum.',
+                'example' => 'EXAME',
+            ],
+            'prioridade' => [
+                'description' => 'Nível de prioridade da solicitação. Aceita valores definidos no PrioridadeEnum.',
+                'example' => 'URGENTE',
+            ],
+            'descricao' => [
+                'description' => 'Descrição da solicitacao.',
+                'example' => 'O paciente alega estar com dor de cabeça',
+            ],
+            'justificativa_prioridade' => [
+                'description' => 'Justificativa para a prioridade. Obrigatório se a prioridade for URGENTE.',
+                'example' => 'Paciente mordido por cachorro infectado, precisa urgentemente de VACINACAO',
+            ],
+        ];
+    }
 }

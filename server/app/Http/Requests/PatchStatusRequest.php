@@ -28,4 +28,20 @@ class PatchStatusRequest extends FormRequest
             'status' => ['required', Rule::enum(StatusSolicitacaoEnum::class)]
         ];
     }
+
+    // Serve apenas para o scribe gerar documentacao  
+    public function bodyParameters(): array
+    {
+        return [
+            'status' => [
+                'description' => "Novo status da solicitação. \n\n"
+                               . "**Regras de Transição Permitidas:**\n"
+                               . "- De `RECEBIDA` para: `EM_ANALISE` ou `CANCELADA`\n"
+                               . "- De `EM_ANALISE` para: `AGENDADA` ou `CANCELADA`\n"
+                               . "- De `AGENDADA` para: `CONCLUIDA` ou `CANCELADA`\n"
+                               . "- `CONCLUIDA` e `CANCELADA` são estados finais e não permitem novas mudanças.",
+                'example' => 'EM_ANALISE -> AGENDADA',
+            ],
+        ];
+    }
 }

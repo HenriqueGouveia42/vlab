@@ -47,4 +47,27 @@ class IndexSolicitacaoRequest extends FormRequest
             'page.integer' => 'A página deve ser um número válido.'
         ];
     }
+
+    // Serve apenas para o scribe gerar documentacao  
+    public function queryParameters(): array
+    {
+        return [
+            'status' => [
+                'description' => 'Filtra as solicitações pelo status exato.',
+                'example' => 'RECEBIDA',
+            ],
+            'categoria' => [
+                'description' => 'Filtra as solicitações por uma categoria específica.',
+                'example' => 'EXAME', 
+            ],
+            'prioridade' => [
+                'description' => 'Filtra as solicitações pela prioridade.',
+                'example' => 'BAIXA',
+            ],
+            'page' => [
+                'description' => 'Número da página para navegação nos resultados paginados.',
+                'example' => 1,
+            ],
+        ];
+    }
 }
