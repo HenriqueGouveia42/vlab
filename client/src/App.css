@@ -91,7 +91,6 @@
   margin-top: 20px;
 }
 
-/* Formulário */
 .form-solicitacao {
   display: flex;
   flex-direction: column;
@@ -115,7 +114,6 @@
   cursor: pointer;
 }
 
-/* Badges e Feedback */
 .badge.URGENTE { color: red; font-weight: bold; }
 .badge.ALTA { color: orange; font-weight: bold; }
 .badge.MEDIA { color: blue; }
