@@ -68,3 +68,8 @@ Para agilizar, podemos simplesmente executar algo como
 
 Para criar uma teste executamos algo como
     "php artisan make:test UpdateSolicitacaoStatusTeste"
+
+
+
+Foi utilizado AI generativa para gerar pedaços de código do front-end, mas cada linha foi auditada. A componentizacao, por exemplo, não teve participacao
+de AI generativa, já que os resultados não são muito positivos para criar patterns para humanos leres
