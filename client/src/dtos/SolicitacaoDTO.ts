@@ -34,14 +34,24 @@ export interface Filter {
 }
 
 export type SolicitacaoDTO = {
-    id?: string,
-    nome_solicitante: string,
-    categoria: string,
+    id?: string | number,
     protocolo: string,
+    solicitante: string,
+    categoria: string,
     prioridade: Prioridade,
     status: Status,
+    detalhes: {
+        descricao: string,
+        justificativa_prioridade: string,
+    }
+   
+    criado_em: string,
+}
+
+export type CreateSolicitacaoDTO = {
+    nome_solicitante: string,
+    categoria: Categoria,
+    prioridade: Prioridade,
     descricao: string,
-    justificativa_prioridade: string,
-    data_criacao: string,
-    data_atualizacao: string
+    justificativa_prioridade?: string
 }

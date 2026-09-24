@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { type SolicitacaoDTO, Status } from '../dtos/SolicitacaoDTO'
+import { type SolicitacaoDTO, Status, type CreateSolicitacaoDTO } from '../dtos/SolicitacaoDTO'
 
 const BASE_URL = 'http://localhost:8000/api/v1';
 
@@ -41,26 +41,22 @@ export function useApi(){
     }
 
     const getSolicitacoes = (page = 1, status = '', categoria = '', prioridade = '') => {
-        
         const params = new URLSearchParams({
             page: String(page),
-            status,
-            categoria,
-            prioridade
+            ...(status && { status }),
+            ...(categoria && { categoria }),
+            ...(prioridade && { prioridade })
         });
 
-        return request<{data: SolicitacaoDTO[], total: number}>(`/solicitacoes?${params}`);
+        return request<{ data: SolicitacaoDTO[], meta: { total: number } }>(`/solicitacoes?${params}`);
     };
 
     const getSolicitacao = (id: string) => {
-
-        request<SolicitacaoDTO>(`/solicitacoes/${id}`);
-
+        return request<{ data: SolicitacaoDTO }>(`/solicitacoes/${id}`);
     }
 
-    const criarSolicitacao = (data: SolicitacaoDTO) => {
-
-        request<SolicitacaoDTO>(`/solicitacoes`, 
+    const criarSolicitacao = (data: CreateSolicitacaoDTO) => {
+        return request<{ data: SolicitacaoDTO }>(`/solicitacoes`, 
             { 
                 method: 'POST',
                 body: JSON.stringify(data)
@@ -68,14 +64,13 @@ export function useApi(){
         );
     }
 
-    const atualizarStatus = (id:string, status: Status) => {
-
-        request<SolicitacaoDTO>(`/solicitacoes/${id}/status`,
+    const atualizarStatus = (id: string, status: Status) => {
+        return request<{ data: SolicitacaoDTO }>(`/solicitacoes/${id}/status`,
             {
                 method: 'PATCH',
-                body: JSON.stringify({status})
+                body: JSON.stringify({ status })
             }
-        )
+        );
     }
 
     return {

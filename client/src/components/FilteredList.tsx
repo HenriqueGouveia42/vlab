@@ -26,7 +26,7 @@ function LinhaSolicitacao({ solicitacao, onMudarStatus }: { solicitacao: Solicit
     return (
         <React.Fragment>
             <tr>
-                <td>{solicitacao.nome_solicitante}</td>
+                <td>{solicitacao.solicitante}</td>
                 <td>{solicitacao.categoria}</td>
                 <td><span className={`badge ${solicitacao.prioridade}`}>{solicitacao.prioridade}</span></td>
                 <td>{solicitacao.status}</td>
@@ -50,10 +50,10 @@ function LinhaSolicitacao({ solicitacao, onMudarStatus }: { solicitacao: Solicit
                 <tr className="linha-detalhes" style={{ backgroundColor: '#f9f9f9' }}>
                     <td colSpan={5} style={{ padding: '15px', textAlign: 'left' }}>
                         <p><strong>Protocolo:</strong> {solicitacao.protocolo || 'N/A'}</p>
-                        <p><strong>Descrição:</strong> {solicitacao.descricao || 'Nenhuma descrição fornecida.'}</p>
+                        <p><strong>Descrição:</strong> {solicitacao.detalhes.descricao || 'Nenhuma descrição fornecida.'}</p>
                         
-                        {solicitacao.justificativa_prioridade && (
-                            <p><strong>Justificativa (Prioridade):</strong> {solicitacao.justificativa_prioridade}</p>
+                        {solicitacao.detalhes.justificativa_prioridade && (
+                            <p><strong>Justificativa (Prioridade):</strong> {solicitacao.detalhes.justificativa_prioridade}</p>
                         )}
                     </td>
                 </tr>
@@ -65,7 +65,6 @@ function LinhaSolicitacao({ solicitacao, onMudarStatus }: { solicitacao: Solicit
 export default function FilteredList(props: FilteredListProps) {
     const { filtros, setFiltros, loading, solicitacoes, handleMudarStatus, page, setPage } = props;
 
-    // Criar funçõezinhas com nomes verbais ajuda na leitura humana
     const irParaPaginaAnterior = () => setPage(p => p - 1);
     const irParaProximaPagina = () => setPage(p => p + 1);
 
@@ -90,7 +89,6 @@ export default function FilteredList(props: FilteredListProps) {
                 <p className="feedback-empty">Nenhuma solicitação encontrada com esses filtros.</p>
             )}
 
-            {/* Se não está carregando e tem dados, renderizamos a tabela */}
             {!loading && solicitacoes.length > 0 && (
                 <table className="tabela-solicitacoes">
                     <thead>
