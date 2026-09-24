@@ -33,6 +33,9 @@ React: 19.2.8
 PostgreSQL: 16
 Docker: 29.8.0
 
+knuckleswtf/scribe:5.11.0
+Gera o arquivo "openapi.yaml" automaticamente a partir da leitura dos Form Requests
+
 Como se trata de um CRUD simples, optei por utilizar uma arquitetura monolítica com separação de responsabilidades e padrão de projeto MVC (Model-View-Controller)
 
 O Controller aqui atua como a interface que expôe um contrato simples e bem definido  (Resource) para ser utilizado por quem vai consumi-lo (Client)
