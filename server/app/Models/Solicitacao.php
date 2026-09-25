@@ -66,7 +66,7 @@ class Solicitacao extends Model
         $is_valid_transition = $this->isValidStatusTransition($newStatus);
 
         if(!$is_valid_transition){
-            throw new RegraNegocioException("Mudanca de status de {$this->status->value} para {$newStatus} não permitida");
+            throw new RegraNegocioException("Mudanca de status de {$this->status->value} para {$newStatus} nao permitida");
         }
 
         $this->status = $newStatus;
