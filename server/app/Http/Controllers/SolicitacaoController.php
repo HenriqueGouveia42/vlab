@@ -20,8 +20,7 @@ class SolicitacaoController extends Controller
      *   }
      * }
      * @response 400 {
-     *   "erro": "Falha de regra de negócio.",
-     *   "detalhe": "Justificativa é obrigatória para prioridade URGENTE."
+     *   "message": "Justificativa é obrigatória para prioridade URGENTE"
      * }
      */
     public function store(StoreSolicitacaoRequest $request){
