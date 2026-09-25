@@ -24,6 +24,7 @@ O projeto foi configurado para subir integrado utilizando o Docker Compose.
     Navegue até o diretório raiz do projeto (`/vlab`).
     (Opcional) Verifique se as portas `8000` (API) e a porta do frontend estão livres na sua máquina.
     Execute o comando para construir e subir os containers:
+    
     docker-compose up --build
 
     Caso ocorra problema de permissão no Linux, utilize
@@ -38,6 +39,7 @@ Documentação da API (OpenAPI)
     Especificação OpenAPI: O arquivo gerado encontra-se no git dno repositório em: server/storage/app/private/scribe/openapi.yaml.
 
     Nota: Para atualizar a documentação durante o desenvolvimento, o comando deve ser executado dentro do container da API:
+    
         sudo docker exec -it vlab_api php artisan scribe:generate
 
 Como Rodar os Testes
