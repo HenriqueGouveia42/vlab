@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\CategoriaEnum;
 use App\Enums\PrioridadeEnum;
 use App\Enums\StatusSolicitacaoEnum;
+use App\Exceptions\RegraNegocioException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -40,7 +41,7 @@ class Solicitacao extends Model
             $solicitacao->protocolo = $protocolo_gerado;
 
             if ($solicitacao->prioridade->value === PrioridadeEnum::URGENTE->value && empty($solicitacao->justificativa_prioridade)) {
-                throw new \Exception("Justificativa é obrigatória para prioridade URGENTE.");
+                throw new RegraNegocioException("Uma solicitacao urgente EXIGE uma justificativa de prioridade");
             }
 
         });
@@ -65,7 +66,7 @@ class Solicitacao extends Model
         $is_valid_transition = $this->isValidStatusTransition($newStatus);
 
         if(!$is_valid_transition){
-            throw new \Exception("Mudanca de status invalida. Mmudanca de {$this->status->value} para {$newStatus} nao permitida.");
+            throw new RegraNegocioException("Mudanca de status de {$this->status->value} para {$newStatus} não permitida");
         }
 
         $this->status = $newStatus;
