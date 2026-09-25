@@ -26,7 +26,9 @@ O projeto foi configurado para subir integrado utilizando o Docker Compose.
     Execute o comando para construir e subir os containers:
     docker-compose up --build
 
-    (Caso ocorra problema de permissão no Linux, utilize sudo docker-compose up -d --build)
+    Caso ocorra problema de permissão no Linux, utilize
+    
+    sudo docker-compose up --build
 
 Documentação da API (OpenAPI)
     A documentação interativa da API foi gerada utilizando o Scribe.
