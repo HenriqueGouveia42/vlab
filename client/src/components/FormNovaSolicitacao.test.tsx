@@ -63,4 +63,23 @@ describe('FormNovaSolicitacao', () => {
             prioridade: Prioridade.BAIXA
         }));
     });
+
+    it('deve exibir mensagens de erro de validação vindas da API (validationErrors)', () => {
+        const mockSubmit = vi.fn();
+        
+        const errosDoBackend = {
+            nome_solicitante: ['O campo nome do solicitante não pode conter números.'],
+            descricao: ['A descrição precisa ter pelo menos 10 caracteres.']
+        };
+
+        render(
+            <FormNovaSolicitacao 
+                onSubmit={mockSubmit} 
+                validationErrors={errosDoBackend} 
+            />
+        );
+
+        expect(screen.getByText('O campo nome do solicitante não pode conter números.')).toBeDefined();
+        expect(screen.getByText('A descrição precisa ter pelo menos 10 caracteres.')).toBeDefined();
+    });
 });

@@ -7,7 +7,7 @@ import FormNovaSolicitacao from './FormNovaSolicitacao';
 
 export default function Dashboard() {
     const navigate = useNavigate();
-    const { loading, error, getSolicitacoes, atualizarStatus, criarSolicitacao } = useApi();
+    const { loading, error, validationErrors, getSolicitacoes, atualizarStatus, criarSolicitacao } = useApi();
     
     const [solicitacoes, setSolicitacoes] = useState<SolicitacaoDTO[]>([]);
     const [page, setPage] = useState(1);
@@ -24,8 +24,10 @@ export default function Dashboard() {
     }, [page, filtros]);
 
     const handleMudarStatus = async (id: string, novoStatus: Status) => {
-        await atualizarStatus(id, novoStatus);
-        carregarDados();
+        const sucesso = await atualizarStatus(id, novoStatus);
+        if(sucesso){
+            carregarDados();
+        }
     };
 
     return (
@@ -65,7 +67,8 @@ export default function Dashboard() {
                         setPage={setPage}
                     />
                 ) : (
-                    <FormNovaSolicitacao 
+                    <FormNovaSolicitacao
+                        validationErrors={validationErrors} 
                         onSubmit={async (dados) => {
                             await criarSolicitacao(dados);
                             setView('lista');

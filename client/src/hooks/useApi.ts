@@ -7,11 +7,13 @@ export function useApi(){
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [validationErrors, setValidationErrors] = useState<Record<string, string[]> | null>(null);
 
     const request = async <T,>(endpoint:String, options?: RequestInit): Promise<T | null> => {
         
         setLoading(true);
         setError(null);
+        setValidationErrors(null);
 
         try{
 
@@ -25,8 +27,13 @@ export function useApi(){
 
             if(!response.ok){
 
-                const errorData = await response.json(); 
-                throw new Error(errorData.erro || errorData.message ||  'Erro na requisição');
+                const errorData = await response.json();
+
+                if (response.status === 422 && errorData.errors) {
+                    setValidationErrors(errorData.errors);
+                }
+
+                throw new Error(errorData.message || 'Erro na requisição');
 
             }
 
@@ -76,6 +83,7 @@ export function useApi(){
     return {
         loading,
         error,
+        validationErrors,
         getSolicitacoes,
         getSolicitacao,
         criarSolicitacao,

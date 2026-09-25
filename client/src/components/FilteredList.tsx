@@ -26,7 +26,7 @@ function LinhaSolicitacao({ solicitacao, onMudarStatus }: { solicitacao: Solicit
     return (
         <React.Fragment>
             <tr 
-                style={{ backgroundColor: solicitacao.status === 'CONCLUIDA' ? '#8f8f8f' : undefined }}>
+                style={{ backgroundColor: solicitacao.status === 'CONCLUIDA' ? '#3dcc20' : undefined }}>
                 <td>{solicitacao.solicitante}</td>
                 <td>{solicitacao.categoria}</td>
                 <td><span className={`badge ${solicitacao.prioridade}`}>{solicitacao.prioridade}</span></td>
