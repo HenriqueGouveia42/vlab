@@ -40,7 +40,7 @@ class PatchStatusRequest extends FormRequest
                                . "- De `EM_ANALISE` para: `AGENDADA` ou `CANCELADA`\n"
                                . "- De `AGENDADA` para: `CONCLUIDA` ou `CANCELADA`\n"
                                . "- `CONCLUIDA` e `CANCELADA` são estados finais e não permitem novas mudanças.",
-                'example' => 'EM_ANALISE -> AGENDADA',
+                'example' => 'AGENDADA',
             ],
         ];
     }
