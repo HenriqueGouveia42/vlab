@@ -8,9 +8,12 @@ Instrucoes para executar o projeto:
 Instrucoes para rodar os testes:
     uma vez que os containers estiverem online, abra outro terminal e execute
         vlab_client - client (front-end):
-            "docker exec -it vlab_client npm run test"
+
+            "sudo docker exec -it vlab_client npm run test"
+
         vlab_api - server (back-end):
-            "docker exec -it vlab_api php artisan test"
+
+            "sudo docker exec -it vlab_api php artisan test"
 
 
 Instrucoes para consultar a documentação da API:
