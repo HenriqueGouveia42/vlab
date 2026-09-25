@@ -54,7 +54,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Criar Solicitação'
       description: ''
       authenticated: false
       deprecated: false
@@ -136,7 +136,29 @@ endpoints:
       descricao: 'O paciente alega estar com dor de cabeça'
       justificativa_prioridade: 'Paciente mordido por cachorro infectado, precisa urgentemente de VACINACAO'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 400
+        content: |-
+          {
+            "erro": "Falha de regra de negócio.",
+            "detalhe": "Justificativa é obrigatória para prioridade URGENTE."
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "message": "Os dados fornecidos são inválidos.",
+            "errors": {
+              "categoria": ["Categoria inválida"]
+            }
+          }
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
@@ -153,8 +175,8 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
-      description: ''
+      title: 'Listar Solicitações'
+      description: 'Retorna uma lista paginada de solicitações, aceitando filtros.'
       authenticated: false
       deprecated: false
     headers:
@@ -254,7 +276,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Exibir Solicitação'
       description: ''
       authenticated: false
       deprecated: false
@@ -283,6 +305,15 @@ endpoints:
     responses:
       -
         custom: []
+        status: 404
+        content: |-
+          {
+            "message": "Record not found."
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
         status: 500
         content: |-
           {
@@ -309,7 +340,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Atualizar Status'
       description: ''
       authenticated: false
       deprecated: false
@@ -359,7 +390,37 @@ endpoints:
     cleanBodyParameters:
       status: 'EM_ANALISE -> AGENDADA'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 400
+        content: |-
+          {
+            "message": "Mudanca de status de CONCLUIDA para EM_ANALISE nao permitida."
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "message": "Solicitacao nao encontrada"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "message": "O status selecionado é invalido.",
+            "errors": {
+              "status": ["O status selecionado é invalido."]
+            }
+          }
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null

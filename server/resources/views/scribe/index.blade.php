@@ -75,16 +75,16 @@
                                 <a href="#endpoints-GETapi-user">GET api/user</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-solicitacoes">
-                                <a href="#endpoints-POSTapi-v1-solicitacoes">POST api/v1/solicitacoes</a>
+                                <a href="#endpoints-POSTapi-v1-solicitacoes">Criar Solicitação</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-solicitacoes">
-                                <a href="#endpoints-GETapi-v1-solicitacoes">GET api/v1/solicitacoes</a>
+                                <a href="#endpoints-GETapi-v1-solicitacoes">Listar Solicitações</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-solicitacoes--id-">
-                                <a href="#endpoints-GETapi-v1-solicitacoes--id-">GET api/v1/solicitacoes/{id}</a>
+                                <a href="#endpoints-GETapi-v1-solicitacoes--id-">Exibir Solicitação</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-v1-solicitacoes--id--status">
-                                <a href="#endpoints-PATCHapi-v1-solicitacoes--id--status">PATCH api/v1/solicitacoes/{id}/status</a>
+                                <a href="#endpoints-PATCHapi-v1-solicitacoes--id--status">Atualizar Status</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -97,7 +97,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: September 24, 2026</li>
+        <li>Last updated: September 25, 2026</li>
     </ul>
 </div>
 
@@ -247,7 +247,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-POSTapi-v1-solicitacoes">POST api/v1/solicitacoes</h2>
+                    <h2 id="endpoints-POSTapi-v1-solicitacoes">Criar Solicitação</h2>
 
 <p>
 </p>
@@ -300,7 +300,31 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-v1-solicitacoes">
-</span>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;erro&quot;: &quot;Falha de regra de neg&oacute;cio.&quot;,
+    &quot;detalhe&quot;: &quot;Justificativa &eacute; obrigat&oacute;ria para prioridade URGENTE.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Os dados fornecidos s&atilde;o inv&aacute;lidos.&quot;,
+    &quot;errors&quot;: {
+        &quot;categoria&quot;: [
+            &quot;Categoria inv&aacute;lida&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-v1-solicitacoes" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-v1-solicitacoes"></span>:
@@ -439,12 +463,12 @@ Must be one of:
         </div>
         </form>
 
-                    <h2 id="endpoints-GETapi-v1-solicitacoes">GET api/v1/solicitacoes</h2>
+                    <h2 id="endpoints-GETapi-v1-solicitacoes">Listar Solicitações</h2>
 
 <p>
 </p>
 
-
+<p>Retorna uma lista paginada de solicitações, aceitando filtros.</p>
 
 <span id="example-requests-GETapi-v1-solicitacoes">
 <blockquote>Example request:</blockquote>
@@ -665,7 +689,7 @@ Must be one of:
             </div>
                 </form>
 
-                    <h2 id="endpoints-GETapi-v1-solicitacoes--id-">GET api/v1/solicitacoes/{id}</h2>
+                    <h2 id="endpoints-GETapi-v1-solicitacoes--id-">Exibir Solicitação</h2>
 
 <p>
 </p>
@@ -702,6 +726,15 @@ fetch(url, {
 </span>
 
 <span id="example-responses-GETapi-v1-solicitacoes--id-">
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Record not found.&quot;
+}</code>
+ </pre>
             <blockquote>
             <p>Example response (500):</p>
         </blockquote>
@@ -805,7 +838,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="endpoints-PATCHapi-v1-solicitacoes--id--status">PATCH api/v1/solicitacoes/{id}/status</h2>
+                    <h2 id="endpoints-PATCHapi-v1-solicitacoes--id--status">Atualizar Status</h2>
 
 <p>
 </p>
@@ -850,7 +883,39 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PATCHapi-v1-solicitacoes--id--status">
-</span>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Mudanca de status de CONCLUIDA para EM_ANALISE nao permitida.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Solicitacao nao encontrada&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;O status selecionado &eacute; invalido.&quot;,
+    &quot;errors&quot;: {
+        &quot;status&quot;: [
+            &quot;O status selecionado &eacute; invalido.&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-PATCHapi-v1-solicitacoes--id--status" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PATCHapi-v1-solicitacoes--id--status"></span>:
