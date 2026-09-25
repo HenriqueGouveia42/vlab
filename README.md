@@ -39,7 +39,7 @@ Documentação da API (OpenAPI)
     Especificação OpenAPI: O arquivo gerado encontra-se no git dno repositório em: server/storage/app/private/scribe/openapi.yaml.
 
     Nota: Para atualizar a documentação durante o desenvolvimento, o comando deve ser executado dentro do container da API:
-    
+
         sudo docker exec -it vlab_api php artisan scribe:generate
 
 Como Rodar os Testes
@@ -70,6 +70,7 @@ Decisões Arquiteturais
 ![Diagrama da Arquitetura](docs/Arquitetura.png)
 
 Uso de Inteligência Artificial
+
     Conforme as regras do desafio, ferramentas de IA generativa (Gemini PRO, fornecida pela conta Google do CIn) foram utilizadas como apoio sob supervisão estrita, nas seguintes áreas:
 
     Pedagógica e Ecossistema: Ajudar na compreensão do fluxo do Laravel (Active Record, Eloquent, ciclo de vida das requisições) e na sintaxe de comandos do Artisan.
