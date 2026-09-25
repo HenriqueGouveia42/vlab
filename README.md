@@ -63,7 +63,7 @@ Decisões Arquiteturais
     Fluxo da Requisição:
     Client (React) -> Rota -> Form Request (Validação) -> Controller -> Model (Regra de Negócio) -> Controller -> Resource (Contrato de Saída) -> Client (React)
 
-    ![Diagrama da Arquitetura](docs/Arquitetura.png)
+![Diagrama da Arquitetura](docs/Arquitetura.png)
 
 Uso de Inteligência Artificial
     Conforme as regras do desafio, ferramentas de IA generativa (Gemini PRO, fornecida pela conta Google do CIn) foram utilizadas como apoio sob supervisão estrita, nas seguintes áreas:
