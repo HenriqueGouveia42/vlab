@@ -1,58 +1,67 @@
 Instrucoes para executar o projeto:
--navegue até o diretório raiz (/vlab)
--execute o comando 
-    "docker-compose up --build"
-        se nao funcionar, execute
-    "sudo docker-compose up --build"
+    -navegue até o diretório raiz (/vlab)
+    -execute o comando 
+        "docker-compose up --build"
+            se nao funcionar, execute
+        "sudo docker-compose up --build"
 
-Para consultar a documentação da API, acesse a URL da api no navegador seguida de ".../docs", ou apenas navegue pela URL abaixo
-
-http://0.0.0.0:8000/docs
-
-A especificação openAPI encontra-se em
-
-"server/storage/app/private/scribe/openapi.yaml"
-
+Instrucoes para rodar os testes:
+    uma vez que os containers estiverem online, abra outro terminal e execute
+        vlab_client - client (front-end):
+            "docker exec -it vlab_client npm run test"
+        vlab_api - server (back-end):
+            "docker exec -it vlab_api php artisan test"
 
 
+Instrucoes para consultar a documentação da API:
+    acesse a URL da api no navegador seguida de ".../docs", ou apenas navegue pela URL abaixo
+        http://0.0.0.0:8000/docs
 
+    A especificação openAPI, gerada automaticamente pelo scribe através da leitura dos Resources, encontra-se em 
+        "server/storage/app/private/scribe/openapi.yaml"
 
-
-------------------------------------------------------------------------------------
-
-
-
-
-
+----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Tecnologias utilizadas:
 PHP: 8.5.0
 Laravel: 13.32.0
+knuckleswtf/scribe:5.11.0
+PostgreSQL: 16
 Typescript: 6.0.2
 React: 19.2.8
-PostgreSQL: 16
+Vitest: 5.0.1
 Docker: 29.8.0
 
-knuckleswtf/scribe:5.11.0
-Gera o arquivo "openapi.yaml" automaticamente a partir da leitura dos Form Requests
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+O "scribe" gera o arquivo "openapi.yaml" automaticamente a partir da leitura dos Form Requests
 
 Como se trata de um CRUD simples, optei por utilizar uma arquitetura monolítica com separação de responsabilidades e padrão de projeto MVC (Model-View-Controller)
 
-O Controller aqui atua como a interface que expôe um contrato simples e bem definido  (Resource) para ser utilizado por quem vai consumi-lo (Client)
+    O Controller aqui atua como a interface que expôe um contrato simples e bem definido  (Resource) para ser utilizado por quem vai consumi-lo (Client)
 
-O consumidor, nesse projeto, tratase da camada View, que nesse caso é o client feito em React, que também tem conhecimento do contrato exposto pelo controller
+    O consumidor, nesse projeto, tratase da camada View, que nesse caso é o client feito em React, que também tem conhecimento do contrato exposto pelo controller
 
-Ao fim da requisição, as regras de negócio são implementadas pelo Model, a classe que de fato conhece as regras de negócio da aplicação (Nesse caso, as restrições condicionais de campos a serem preenchidos, etc)
+    Ao fim da requisição, as regras de negócio são implementadas pelo Model, a classe que de fato conhece as regras de negócio da aplicação (Nesse caso, as restrições condicionais de campos a serem preenchidos, etc)
 
+    Ou seja, o fluxo de informação se dá da seguinte forma:
+        View -> rota -> Form Request -> Controller -> Model
+    
+    E, na volta
+        Model -> Controller -> Resource -> View
 
-Ou seja, o fluxo de informação se dá da seguinte forma:
-    View -> Controller -> Model
-Inteligência Artificial foi utilizada de forma pedagógica, para que o desenvolvedor candidato apreendesse como funciona o framework /
+    Perceba que na volta, o Resource é a camada entre o que o Controller devolveu e o que o View recebeu, ou seja, o contrato da API precisa ser definida dentro do RESOURCE
+    A ferramenta para gerar documentação da API utilizada nesse projeto foi o "Scribe", e ela vai ler justamente no Resource em questão daquele determinado Controller
+
+Inteligência Artificial foi utilizada de forma pedagógica, para apreender como funciona o framework /
 ecossistema Laravel, como a utilização do artisian para criar Migrations, Models, FormRequests e Controllers, e entender o paradigma
 Active Record (com o ORM Eloquent)
 
 Foi utilizado AI generativa para gerar pedaços de código do front-end, mas cada linha foi auditada. A componentizacao, por exemplo, não teve participacao
-de AI generativa, já que os resultados não são muito positivos para criar patterns para humanos leres
+de AI generativa, já que os resultados não são muito positivos para criar patterns. Patterns existem especificamente para que nós seres humanos consigamos
+lidar com sistemas complexos que cresceram muito, portanto, têm uma grande utilidade para programadores humanos, mas é um péssimo negócio para IA's generativas,
+que precisam gastar muitos tokens e lidar com camadas e mais camadas de abstração (E até mesmo identação) que foram desenhadas para humanos, mas que para uma IA
+não passa de um desperdício.
 
 Passo 0: Criar a migration
 executar o comando "php artisan make:migration create_nome_da_tabela_table"
