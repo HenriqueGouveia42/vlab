@@ -10,21 +10,33 @@ use App\Http\Resources\SolicitacaoResource; //Contrato de saída da API
 
 class SolicitacaoController extends Controller
 {
-    /*
-        Função responsável por criar uma nova solicitação.
-        O 'Store...' no começo do nome da função é para deixar claro
-        que ela cria uma nova solicitacao no banco de dados
-    */
+    /**
+     * Criar Solicitação
+     *
+     * @response 422 {
+     *   "message": "Os dados fornecidos são inválidos.",
+     *   "errors": {
+     *     "categoria": ["Categoria inválida"]
+     *   }
+     * }
+     * @response 400 {
+     *   "erro": "Falha de regra de negócio.",
+     *   "detalhe": "Justificativa é obrigatória para prioridade URGENTE."
+     * }
+     */
     public function store(StoreSolicitacaoRequest $request){
 
         $dadosValidados = $request->validated();
-
         $solicitacao = Solicitacao::create($dadosValidados);
-
         return new SolicitacaoResource($solicitacao);
 
     }
 
+    /**
+     * Listar Solicitações
+     * 
+     * Retorna uma lista paginada de solicitações, aceitando filtros.
+    */
     public function index(IndexSolicitacaoRequest $request){
 
         $query = Solicitacao::query();
@@ -51,28 +63,38 @@ class SolicitacaoController extends Controller
 
     }
 
+    /**
+     * Exibir Solicitação
+     *
+     * @response 404 {
+     *   "message": "Record not found."
+     * }
+    */
     public function show(string $id){
-
         $solicitacao = Solicitacao::findOrFail($id);
-
         return new SolicitacaoResource($solicitacao);
-
     }
 
+    /**
+     * Atualizar Status
+     *
+     * @response 422 {
+     *   "message": "O status selecionado é invalido.",
+     *   "errors": {
+     *     "status": ["O status selecionado é invalido."]
+     *   }
+     * }
+     * @response 400 {
+     *   "message": "Mudanca de status de CONCLUIDA para EM_ANALISE nao permitida."
+     * }
+     * @response 404 {
+     *   "message": "Solicitacao nao encontrada"
+     * }
+     */
     public function updateStatus(PatchStatusRequest $request, string $id){
-
         $solicitacao = Solicitacao::findOrFail($id);
-
-        try{
-
-            $solicitacao->updateStatus($request->status);
-
-            //return response()->json($solicitacao);
-            return new SolicitacaoResource($solicitacao);
-
-        }catch(\Exception $e){
-            return response()->json(['erro' => $e->getMessage()], 422);
-        }
+        $solicitacao->updateStatus($request->status);
+        return new SolicitacaoResource($solicitacao);
 
     }
 }
