@@ -39,7 +39,7 @@ test('deve lancar erro ao tentar fazer update do status de RECEBIDA para AGENDAD
         'status' => 'AGENDADA'
     ]);
 
-    $response->assertStatus(422)->assertJsonStructure(['erro']);
+    $response->assertStatus(400)->assertJsonStructure(['message']);
 
     $this->assertDatabaseHas('solicitacaos', [
         'id' => $solicitacao->id,
