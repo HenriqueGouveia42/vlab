@@ -24,7 +24,7 @@ O projeto foi configurado para subir integrado utilizando o Docker Compose.
     Navegue até o diretório raiz do projeto (`/vlab`).
     (Opcional) Verifique se as portas `8000` (API) e a porta do frontend estão livres na sua máquina.
     Execute o comando para construir e subir os containers:
-    docker-compose up -d --build
+    docker-compose up --build
 
     (Caso ocorra problema de permissão no Linux, utilize sudo docker-compose up -d --build)
 
