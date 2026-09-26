@@ -19,17 +19,20 @@ Tecnologias Utilizadas
 
 -----Como Executar o Projeto-----
 
-O projeto foi configurado para subir integrado utilizando o Docker Compose.
+    O projeto foi configurado para subir de forma 100% integrada (plug and play) utilizando o Docker Compose. O orquestrador já está configurado para baixar dependências (Composer/npm), configurar o arquivo .env, gerar a chave de segurança da API e rodar as migrations no banco de dados automaticamente.
 
     Navegue até o diretório raiz do projeto (`/vlab`).
-    (Opcional) Verifique se as portas `8000` (API) e a porta do frontend estão livres na sua máquina.
+    (Opcional) Verifique se a porta `8000` (API) e a porta `5173` (Frontend) estão livres na sua máquina.
     Execute o comando para construir e subir os containers:
     
+    ```bash
     docker-compose up --build
-
-    Caso ocorra problema de permissão no Linux, utilize
+    ```
     
-    sudo docker-compose up --build
+    *(Caso ocorra problema de permissão no Linux, utilize `sudo docker-compose up --build`)*
+
+   Com os containers em execução, abra o seu navegador e acesse a interface do React em:
+   **http://localhost:5173**
 
 Documentação da API (OpenAPI)
     A documentação interativa da API foi gerada utilizando o Scribe.

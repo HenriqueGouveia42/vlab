@@ -1,13 +1,11 @@
-FROM mirror.gcr.io/library/node:20-alpine
+FROM node:24-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
-
+COPY package.json package-lock.json* ./
 RUN npm install
 
 COPY . .
 
 EXPOSE 5173
-
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["npm", "run", "dev"]

@@ -1,6 +1,6 @@
 services:
   db:             
-    image: mirror.gcr.io/library/postgres:16
+    image: postgres:16-alpine
     container_name: vlab_db
     restart: unless-stopped
     environment:
@@ -13,6 +13,11 @@ services:
       - vlab_pgdata:/var/lib/postgresql/data
     networks:
       - vlab_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d vlab_solicitacoes"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   api:
     build:
@@ -24,11 +29,13 @@ services:
       - "8000:8000"
     volumes:
       - ./server:/var/www/html
-      - /var/www/html/vendor # garante as dependências do PH
+      - /var/www/html/vendor 
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - vlab_network
+    command: sh -c "if [ ! -f .env ]; then cp .env.example .env && php artisan key:generate; fi && composer install --no-interaction && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
 
   client:
     build:
@@ -39,8 +46,8 @@ services:
     ports:
       - "5173:5173"         
     volumes:
-      - ./client:/app      
-      - /app/node_modules   
+      - ./client:/app
+      - /app/node_modules      
     depends_on:
       - api                 
     networks:

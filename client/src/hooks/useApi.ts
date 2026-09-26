@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { type SolicitacaoDTO, Status, type CreateSolicitacaoDTO } from '../dtos/SolicitacaoDTO'
 
-const BASE_URL = 'http://localhost:8000/api/v1';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export function useApi(){
 
